@@ -1,5 +1,7 @@
 package davidul.utils;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,5 +78,41 @@ public class ArrayUtilsTest {
         final String[] shift = ArrayUtils.shift(c);
         ArrayUtils.minHeap(shift, 0, 0, String::compareTo);
 
+    }
+
+    @Test
+    public void rotate(){
+        String [] a = new String[]{"1","2","3"};
+        String [] expected = new String[]{"3","2","1"};
+        final String[] rotate = ArrayUtils.rotate(a, 2);
+        Assertions.assertThat(rotate).containsExactlyElementsOf(Lists.newArrayList("2","3","1"));
+
+        String [] b = new String[]{"1", "2", "3", "4" ,"5"};
+        final String[] rotate1 = ArrayUtils.rotate(b, 2);
+        Assertions.assertThat(rotate1).containsExactlyElementsOf(Lists.newArrayList("4","5","1","2","3"));
+
+        String [] c = new String[]{"1", "2", "3", "4" ,"5","6"};
+        final String[] rotate2 = ArrayUtils.rotate(c, 2);
+        Assertions.assertThat(rotate2).containsExactlyElementsOf(Lists.newArrayList("5","6","1","2","3","4"));
+
+        String [] d = new String[]{"1", "2", "3", "4" ,"5","6"};
+        final String[] rotate3 = ArrayUtils.rotate(d, 3);
+        Assertions.assertThat(rotate3).containsExactlyElementsOf(Lists.newArrayList("4","5","6","1","2","3"));
+
+        String [] e = new String[]{"1","2","3","4","1","2","3","4","1","2","3","4"};
+        final String[] rotate4 = ArrayUtils.rotate(e, 4);
+        Assertions.assertThat(rotate4).containsExactlyElementsOf(Lists.newArrayList("1","2","3","4","1","2","3","4","1","2","3","4"));
+
+    }
+
+    @Test
+    public void reverse(){
+        String [] a = new String[]{"1","2","3"};
+        String[] reverse = ArrayUtils.reverse(a);
+        Assertions.assertThat(reverse).containsExactlyElementsOf(Lists.newArrayList("3","2","1"));
+
+        String [] b = new String[]{"1","2","3","4"};
+        reverse = ArrayUtils.reverse(b);
+        Assertions.assertThat(reverse).containsExactlyElementsOf(Lists.newArrayList("4","3","2","1"));
     }
 }
