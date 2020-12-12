@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
+import java.util.Comparator;
+import java.util.Random;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArrayUtilsTest {
@@ -60,8 +63,19 @@ public class ArrayUtilsTest {
     @Test
     public void subarray(){
         String [] a = new String[]{"a", "b", "c"};
-        final String[] subarray = ArrayUtils.subarray(a, 1, a.length);
-        assertThat(subarray.length).isEqualTo(2);
+        final String[] s = ArrayUtils.subarray(a, 1, a.length);
+        assertThat(s.length).isEqualTo(2);
+
+        String [] b = new String[]{"a", "b", "c", "d", "e", "f"};
+        final String[] s1 = ArrayUtils.subarray(b, 2, 4);
+        assertThat(s1.length).isEqualTo(2);
+        assertThat(s1).containsExactlyElementsOf(Lists.newArrayList("c", "d"));
+
+        String [] c = new String[]{"a", "b", "c", "d", "e", "f"};
+        final String[] s2 = ArrayUtils.subarray(b, 0, 1);
+
+        String [] d = new String[]{"a", "b", "c", "d", "e", "f"};
+        ArrayUtils.subarray(d,4,5);
     }
 
     @Test
@@ -103,7 +117,29 @@ public class ArrayUtilsTest {
         final String[] rotate4 = ArrayUtils.rotate(e, 4);
         Assertions.assertThat(rotate4).containsExactlyElementsOf(Lists.newArrayList("1","2","3","4","1","2","3","4","1","2","3","4"));
 
+        String [] f = new String[0];
+        final String[] rotate5 = ArrayUtils.rotate(f, 4);
+        Assertions.assertThat(rotate5).containsExactlyElementsOf(Lists.newArrayList());
+
+        String [] g = new String[]{"1"};
+        final String[] rotate6 = ArrayUtils.rotate(g, 4);
+        Assertions.assertThat(rotate6).containsExactlyElementsOf(Lists.newArrayList("1"));
+
     }
+
+    @Test
+    public void rotate_big(){
+        Integer [] n = new Integer[1000_000] ;
+        Random r = new Random();
+        StringBuffer sb = new StringBuffer();
+        for(int i = 0; i < n.length; i++){
+            sb.append(i + " ");
+            n[i] = r.nextInt(100_000);
+        }
+        final String[] s = sb.toString().split(" ");
+        ArrayUtils.rotate(n, 11110);
+    }
+
 
     @Test
     public void reverse(){
@@ -114,5 +150,18 @@ public class ArrayUtilsTest {
         String [] b = new String[]{"1","2","3","4"};
         reverse = ArrayUtils.reverse(b);
         Assertions.assertThat(reverse).containsExactlyElementsOf(Lists.newArrayList("4","3","2","1"));
+    }
+
+    @Test
+    public void min(){
+        String [] a = new String[]{"1","2","3"};
+        final String min = ArrayUtils.min(a, String::compareTo);
+        assertThat(min).isEqualTo("1");
+    }
+
+    @Test
+    public void binary_search(){
+        String [] b = new String[]{"1","2","3","4"};
+        ArrayUtils.binarySearch(b, "2", String::compareTo);
     }
 }

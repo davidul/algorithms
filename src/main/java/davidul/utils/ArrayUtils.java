@@ -64,6 +64,13 @@ public class ArrayUtils {
         return ts;
     }
 
+    public static <T> T[] shiftByN(T[] t, int shift){
+        final T item = t[0];
+        final T[] ts = (T[]) newInstance(t.getClass().componentType(), t.length - shift);
+        System.arraycopy(t, 1, ts, 0, t.length - 1);
+        return ts;
+    }
+
     //append to last
     public static <T> T[] push(T[] t, T item) {
         final T[] extend = extend(t, 1);
@@ -94,6 +101,16 @@ public class ArrayUtils {
         return t;
     }
 
+    public static <T> T min(T[] t, Comparator<T> comparator){
+        T min = t[0];
+        for(int i = 1; i < t.length; i++){
+            if(comparator.compare(min, t[i]) > -1){
+                min = t[i];
+            }
+        }
+        return min;
+    }
+
     /**
      * Change every n-th element. At the end
      * of the array, roll back to beginning.
@@ -104,6 +121,9 @@ public class ArrayUtils {
      */
     public static <T> T[] rotate(T[] t, int rot) {
         final int length = t.length;
+        if(length == 0 || length == 1 || rot == 0)
+            return t;
+
         T temp = t[0];
         for(int r = 0; r < rot; r++){
             if(length%2 == 0)//if even elements
@@ -163,4 +183,27 @@ public class ArrayUtils {
             }
         }
     }
+
+    /**
+     * Array must be sorted
+     * @param t
+     * @param find
+     * @param <T>
+     * @return
+     */
+    public static <T> T binarySearch(T[] t, T find, Comparator<T> comparator){
+        int middle = t.length/2;
+        int result = comparator.compare(t[middle], find);
+        if(result == 0){
+            return find;
+        }else if(result > 0){ //middle item is greater, take lower half
+            binarySearch(subarray(t, 0, middle+1), find, comparator);
+        }else{ //upper half
+            binarySearch(subarray(t, middle, t.length + 1), find, comparator);
+        }
+
+        return find;
+    }
+
+
 }
