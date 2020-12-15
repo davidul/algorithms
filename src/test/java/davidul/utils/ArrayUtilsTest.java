@@ -4,8 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -163,5 +165,15 @@ public class ArrayUtilsTest {
     public void binary_search(){
         String [] b = new String[]{"1","2","3","4"};
         ArrayUtils.binarySearch(b, "2", String::compareTo);
+    }
+
+    @Test
+    public void merge(){
+        String [] a = new String[]{"1","2","3"};
+        String [] b = new String[]{"4","5","6"};
+        final String[] merge = ArrayUtils.merge(a, b);
+        assertThat(merge.length).isEqualTo(6);
+        final String join = String.join("", merge);
+        assertThat(join).isEqualTo("123456");
     }
 }

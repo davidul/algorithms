@@ -1,5 +1,6 @@
 package davidul.utils;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 import static java.lang.reflect.Array.getLength;
@@ -205,5 +206,11 @@ public class ArrayUtils {
         return find;
     }
 
+
+    public static <T> T[] merge(T[] t1, T[] t2){
+        final T[] ts = Arrays.copyOf(t1, t1.length + t2.length);
+        System.arraycopy(t2, 0, ts, t1.length, t2.length);
+        return ts;
+    }
 
 }
