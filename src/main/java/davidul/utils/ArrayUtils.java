@@ -10,7 +10,7 @@ public class ArrayUtils {
 
 
     public static <T> T[] allocate(Class<T> t, int size) {
-        final T[] ts = (T[]) newInstance(t.componentType(), size);
+        final T[] ts = (T[]) newInstance(t, size);
         return ts;
     }
 
@@ -211,6 +211,20 @@ public class ArrayUtils {
         final T[] ts = Arrays.copyOf(t1, t1.length + t2.length);
         System.arraycopy(t2, 0, ts, t1.length, t2.length);
         return ts;
+    }
+
+    public static <T> T[] empty(T[] t){
+        return (T[]) newInstance(t.getClass().componentType(), 0);
+    }
+
+    public static <T> T[] empty(Class c){
+        return (T[]) newInstance(c, 0);
+    }
+
+    public static <T> T[] append(T[] t, T a){
+        final T[] extend = extend(t, 1);
+        extend[t.length] = a;
+        return extend;
     }
 
 }

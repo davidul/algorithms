@@ -13,6 +13,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArrayUtilsTest {
 
+
+    @Test
+    public void allocate(){
+        try {
+            final Class<String> aClass = (Class<String>) Class.forName("java.lang.String");
+            final String[] allocate = ArrayUtils.allocate(aClass, 2);
+            assertThat(allocate.length).isEqualTo(2);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void extend() {
         String [] a = new String[]{"a", "b", "c"};
