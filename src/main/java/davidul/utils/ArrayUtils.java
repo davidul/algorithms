@@ -23,6 +23,9 @@ public class ArrayUtils {
      * @return new extended array
      */
     public static <T> T[] extend(T[] t, int extendBy) {
+        if(extendBy < 0){
+            return t;
+        }
         final T[] ts = (T[]) newInstance(t.getClass().componentType(), t.length + extendBy);
         System.arraycopy(t, 0, ts, 0, t.length);
         return ts;
@@ -30,6 +33,7 @@ public class ArrayUtils {
 
     /**
      * Shrink array by specified amount.
+     * If shrinkBy is 0, then behaves like copy.
      *
      * @param t        input array
      * @param shrinkBy shrink by amount
@@ -49,21 +53,33 @@ public class ArrayUtils {
      * @param <T>
      * @return
      */
-    //remove first item
     public static <T> T[] shift(T[] t) {
-        final T item = t[0];
+        if(t.length == 0){
+            return t;
+        }
         final T[] ts = (T[]) newInstance(t.getClass().componentType(), t.length - 1);
         System.arraycopy(t, 1, ts, 0, t.length - 1);
         return ts;
     }
 
-    //append first item
+    /**
+     * Prepend item to the array
+     * @param t array
+     * @param item item to prepend
+     * @param <T> type
+     * @return new array with prepended item
+     */
     public static <T> T[] unshift(T[] t, T item) {
         final T[] ts = (T[]) newInstance(t.getClass().componentType(), t.length + 1);
         System.arraycopy(t, 0, ts, 1, t.length);
         ts[0] = item;
         return ts;
     }
+
+    public static <T> T[] unshift(T[] t, T [] items) {
+        return merge(items, t);
+    }
+
 
     public static <T> T[] shiftByN(T[] t, int shift){
         final T item = t[0];
@@ -72,7 +88,13 @@ public class ArrayUtils {
         return ts;
     }
 
-    //append to last
+    /**
+     * Append last
+     * @param t
+     * @param item
+     * @param <T>
+     * @return
+     */
     public static <T> T[] push(T[] t, T item) {
         final T[] extend = extend(t, 1);
         extend[extend.length - 1] = item;

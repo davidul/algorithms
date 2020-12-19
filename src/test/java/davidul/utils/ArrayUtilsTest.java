@@ -4,10 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,6 +30,9 @@ public class ArrayUtilsTest {
 
         final String[] extend1 = ArrayUtils.extend(a, 0);
         assertThat(extend1.length).isEqualTo(3);
+
+        final String[] extend2 = ArrayUtils.extend(a, -1);
+        assertThat(extend2.length).isEqualTo(a.length);
     }
 
     @Test
@@ -40,6 +40,9 @@ public class ArrayUtilsTest {
         String [] a = new String[]{"a", "b", "c"};
         final String[] shrink = ArrayUtils.shrink(a, 1);
         assertThat(shrink.length).isEqualTo(2);
+
+        final String[] shrink0 = ArrayUtils.shrink(a, 0);
+        assertThat(shrink0.length).isEqualTo(a.length);
     }
 
     @Test
@@ -48,6 +51,9 @@ public class ArrayUtilsTest {
         final String[] shift = ArrayUtils.shift(a);
         assertThat(shift.length).isEqualTo(2);
         assertThat(shift[0]).isEqualTo("b");
+
+        String[] shift1 = ArrayUtils.shift(new String[]{});
+        assertThat(shift1.length).isEqualTo(0);
     }
 
     @Test
@@ -56,6 +62,14 @@ public class ArrayUtilsTest {
         final String[] ds = ArrayUtils.unshift(a, "d");
         assertThat(ds.length).isEqualTo(4);
         assertThat(ds[0]).isEqualTo("d");
+    }
+
+    @Test
+    public void unshift_array(){
+        String [] a = new String[]{"a", "b", "c"};
+        String [] b = new String[]{"d", "e", "f"};
+        final String[] unshift = ArrayUtils.unshift(a, b);
+        assertThat(unshift.length).isEqualTo(6);
     }
 
     @Test
@@ -72,6 +86,12 @@ public class ArrayUtilsTest {
         final String[] ds = ArrayUtils.push(a, "d");
         assertThat(ds.length).isEqualTo(4);
         assertThat(ds[ds.length-1]).isEqualTo("d");
+
+        String [] b = new String[]{};
+        final String[] ds1 = ArrayUtils.push(b, "d");
+        assertThat(ds1.length).isEqualTo(1);
+        final String[] es = ArrayUtils.push(ds1, "e");
+        assertThat(es.length).isEqualTo(2);
     }
 
     @Test
