@@ -50,14 +50,35 @@ public class BinaryTree<T> {
         return parent;
     }
 
+
+    /**
+     *          8
+     *      6        11
+     *    5   7   9     14
+     * @param data
+     * @param comparator
+     */
     public void remove(T data, Comparator<T> comparator){
-        final Node<T> item = find(data, root, comparator);
+        Node<T> item = find(data, root, comparator);
         if(item != null){
             if(item.left == null && item.right == null){//leaf
                 if (comparator.compare(item.parent.left.data, data) == 0) //left or right child of the parent
                     item.parent.left = null;
                 else
                     item.parent.right = null;
+            }else if(item.left != null && item.right == null){ //just left subtree
+                item.parent.left = item.left;
+                item  = null;
+            }else if(item.left == null) {//just right subtree
+                item.parent.right = item.right;
+                item = null;
+            }else{
+                final Node<T> min = min(item.right);//minimum of the right subtree
+                min.parent.left = null;
+                min.parent = item.parent;
+                min.left = item.left;
+                min.right = item.right;
+                item = null;
             }
         }
 
@@ -95,6 +116,24 @@ public class BinaryTree<T> {
             node = find(data, node.left, comparator);
         }
         return node;
+    }
+
+    public Node<T> max(){
+        return this.max(this.root);
+    }
+
+    public Node<T> max(Node<T> subtree){
+        if(subtree.right != null)
+            return max(subtree.right);
+        else
+            return subtree;
+    }
+
+    public Node<T> min(Node<T> subtree){
+        if(subtree.left != null)
+            return min(subtree.left);
+        else
+            return subtree;
     }
 
     /**
@@ -140,30 +179,44 @@ public class BinaryTree<T> {
         }
     }
 
-    public void preOrder() {
-        preOrder(this.root);
+    /**
+     *
+     * @return
+     */
+    public List<T> preOrder() {
+        List<T> collect = new ArrayList<>();
+        preOrder(this.root, collect);
+        return collect;
     }
 
-    private void preOrder(Node<T> node){
+    private void preOrder(Node<T> node, List<T> collect){
         if(node != null) {
-            System.out.println(node.data);
-            preOrder(node.left);
-            preOrder(node.right);
+            collect.add(node.data);
+            preOrder(node.left, collect);
+            preOrder(node.right, collect);
         }
     }
 
-    public void postOrder() {
-        postOrder(this.root);
+    /**
+     * @return
+     */
+    public List<T> postOrder() {
+        List<T> collect = new ArrayList<>();
+        postOrder(this.root, collect);
+        return collect;
     }
 
-    private void postOrder(Node<T> node){
+    private void postOrder(Node<T> node, List<T> collect){
         if(node != null){
-            postOrder(node.left);
-            postOrder(node.right);
-            System.out.println(node.data);
+            postOrder(node.left, collect);
+            postOrder(node.right, collect);
+            collect.add(node.data);
         }
     }
 
+    /**
+     * @return
+     */
     public List<T> inOrder() {
         List<T> collect = new ArrayList<>();
         inOrder(this.root, collect);
