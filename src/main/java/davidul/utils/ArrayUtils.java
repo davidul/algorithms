@@ -3,7 +3,6 @@ package davidul.utils;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static java.lang.reflect.Array.getLength;
 import static java.lang.reflect.Array.newInstance;
 
 public class ArrayUtils {
@@ -101,6 +100,23 @@ public class ArrayUtils {
         return extend;
     }
 
+    public static <T> T[] push(T[] t, T item, int position) {
+        if(position == 0){
+            return unshift(t, item);
+        }
+
+        if(position >= t.length - 1){
+            return push(t, item);
+        }
+
+        //[0 1 2 x3 4]
+        final T[] start = subarray(t, 0, position);
+        final T[] end = subarray(t, position, t.length);
+        final T[] push = push(start, item);
+        final T[] merge = merge(push, end);
+        return merge;
+    }
+
     //remove the last element
     public static <T> Tuple<T, T[]> pop(T[] t) {
         final T item = t[t.length - 1];
@@ -120,6 +136,18 @@ public class ArrayUtils {
             T tmp = t[i];
             t[i] = t[t.length - 1 - i];
             t[t.length - 1 - i] = tmp;
+        }
+        return t;
+    }
+
+    public static <T> T[] reverse2(T[] t){
+        int start = 0;
+        int end = t.length - 1;
+        for(int i = start; i < t.length/2; i++ ){
+            final T t1 = t[i];
+            t[i] = t[end];
+            t[end] = t1;
+            --end;
         }
         return t;
     }

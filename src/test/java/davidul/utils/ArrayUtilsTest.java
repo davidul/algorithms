@@ -95,6 +95,24 @@ public class ArrayUtilsTest {
     }
 
     @Test
+    public void push_position(){
+        String [] a = new String[]{"a", "b", "c"};
+        final String[] ds = ArrayUtils.push(a, "d", 0);
+        assertThat(ds.length).isEqualTo(4);
+        assertThat(ds[0]).isEqualTo("d");
+
+        String [] b = new String[]{"a", "b", "c"};
+        final String[] bs = ArrayUtils.push(b, "d", b.length);
+        assertThat(bs.length).isEqualTo(4);
+        assertThat(bs[bs.length - 1]).isEqualTo("d");
+
+        String [] c = new String[]{"a", "b", "c"};
+        final String[] cs = ArrayUtils.push(c, "d", 1);
+        assertThat(cs.length).isEqualTo(4);
+        assertThat(cs[1]).isEqualTo("d");
+    }
+
+    @Test
     public void subarray(){
         String [] a = new String[]{"a", "b", "c"};
         final String[] s = ArrayUtils.subarray(a, 1, a.length);
@@ -187,6 +205,17 @@ public class ArrayUtilsTest {
     }
 
     @Test
+    public void reverse2(){
+        String [] a = new String[]{"1","2","3"};
+        String[] reverse = ArrayUtils.reverse2(a);
+        Assertions.assertThat(reverse).containsExactlyElementsOf(Lists.newArrayList("3","2","1"));
+
+        String [] b = new String[]{"1","2","3","4"};
+        reverse = ArrayUtils.reverse2(b);
+        Assertions.assertThat(reverse).containsExactlyElementsOf(Lists.newArrayList("4","3","2","1"));
+    }
+
+    @Test
     public void min(){
         String [] a = new String[]{"1","2","3"};
         final String min = ArrayUtils.min(a, String::compareTo);
@@ -208,4 +237,5 @@ public class ArrayUtilsTest {
         final String join = String.join("", merge);
         assertThat(join).isEqualTo("123456");
     }
+
 }
