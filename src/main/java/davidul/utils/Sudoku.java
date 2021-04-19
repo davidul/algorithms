@@ -1,7 +1,5 @@
 package davidul.utils;
 
-import java.util.Scanner;
-
 public class Sudoku {
 
     public static void main(String[] args) {
@@ -15,6 +13,11 @@ public class Sudoku {
                 a[i][j] = Integer.valueOf(b[j]);
             }
         }*/
+
+        for(int i = 1; i < 10; i++){
+            final int i1 = i / 3;
+            System.out.println(i1);
+        }
 
         final int[][] ints = sudoku.create(9, 9);
         int[][] sample = new int[][]{
@@ -40,17 +43,25 @@ public class Sudoku {
                 {0, 3, 4, 0, 1, 0, 0, 2, 8}
         };
 
-        sudoku.solve(sample1);
+        sudoku.solve(sample1, 9, 9);
         sudoku.print(sample1);
     }
 
-    public boolean solve(int[][] a) {
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
+    private int width;
+    private int height;
+
+    /**
+     * The "main" method to solve sudoku.
+     * @param a 9x9 grid
+     * @return
+     */
+    public boolean solve(int[][] a, int width, int height) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 if (a[x][y] == 0) {
                     for (int i = 9; i > 0; i--) {
                         a[x][y] = i;
-                        if (isValid(a, x, y) && solve(a)) {
+                        if (isValid(a, x, y) && solve(a, width, height)) {
                             return true;
                         }else {
                             a[x][y] = 0;
@@ -63,6 +74,13 @@ public class Sudoku {
         return true;
     }
 
+    /**
+     * Checks the validity of the grid according to sudoku rules.
+     * @param a grid
+     * @param r row
+     * @param c column
+     * @return validity
+     */
     public boolean isValid(int [][] a, int r, int c){
         final int[] row = row(a, r);
         final int[] col = col(a, c);
@@ -75,6 +93,11 @@ public class Sudoku {
         return duplicate(row) && duplicate(col) && duplicate(square);
     }
 
+    /**
+     * Checks for duplicate item row or column (1d-array)
+     * @param a
+     * @return
+     */
     public boolean duplicate(int[] a){
         int [] counter = new int[a.length];
         for(int i = 0; i < a.length; i++){
@@ -91,6 +114,11 @@ public class Sudoku {
         return true;
     }
 
+    /**
+     * Checks for duplicate item in a square
+     * @param a square
+     * @return
+     */
     public boolean duplicate(int [][] a){
         final int[] ints = new int[a.length * a[0].length];
         for(int i = 0; i < a.length; i++){
@@ -136,6 +164,15 @@ public class Sudoku {
         return false;
     }
 
+    /**
+     * Extracts a square of size 3x3 for given coordinates.
+     * In the grid 9x9 there are 9 squares.
+     *
+     * @param a
+     * @param row
+     * @param col
+     * @return
+     */
     public int[][] square(int [][] a, int row, int col){
         int xr = row / 3;
         int xc = col / 3;
@@ -169,14 +206,33 @@ public class Sudoku {
         return false;
     }
 
+
+    /**
+     * Allocate x*y grid.
+     * @param x width
+     * @param y height
+     * @return allocated grid
+     */
     public int[][] create(int x, int y) {
         return new int[x][y];
     }
 
+    /**
+     * Extracts a row from a grid
+     * @param a grid
+     * @param row row
+     * @return a row
+     */
     public int[] row(int[][] a, int row) {
         return a[row];
     }
 
+    /**
+     * Extracts a column from a grid
+     * @param a grid
+     * @param col
+     * @return
+     */
     public int[] col(int[][] a, int col) {
         int[] colArray = new int[a.length];
         for (int i = 0; i < a.length; i++) {
