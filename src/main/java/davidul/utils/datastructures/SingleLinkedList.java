@@ -1,6 +1,7 @@
 package davidul.utils.datastructures;
 
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -92,7 +93,7 @@ public class SingleLinkedList<T> {
 
     /**
      * Returns but does not remove
-     * @return
+     * @return data
      */
     public T peekFirst(){
         if(this.head == null)
@@ -133,6 +134,43 @@ public class SingleLinkedList<T> {
         return current;
     }
 
+
+    /**
+     * Convert linked list to array
+     * @return
+     */
+    public Object[] toArray(){
+        final Object[] objects = new Object[size];
+        Node<T> n = this.head;
+        for(int i = 0; i < size; i++) {
+            objects[i] = n.data;
+            n = n.next;
+        }
+
+        return objects;
+    }
+
+
+    public Iterator<T> iterator(){
+        return new Iterator<T>() {
+            Node<T> node = SingleLinkedList.this.head;
+
+            @Override
+            public boolean hasNext() {
+                return node.next != null;
+            }
+
+            @Override
+            public T next() {
+                if(node != null){
+                    final T data = node.data;
+                    node = node.next;
+                    return data;
+                }
+                throw new NoSuchElementException();
+            }
+        };
+    }
 
     private void append(Node<T> start, Node<T> n) {
         if (start.next == null) {
