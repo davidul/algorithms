@@ -2,7 +2,9 @@ package davidul.problems.leetcode.solved;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Given an integer array nums of length n where all the integers of nums are in the range [1, n] and each integer appears once or twice, return an array of all the integers that appears twice.
@@ -41,17 +43,26 @@ public class FindAllDuplicates442 {
         for(Integer i : integers){
             System.out.println(i);
         }
+
+        integers = findAllDuplicates442.useHashSet(new int[]{4, 3, 2, 7, 8, 2, 3, 1});
+        for(Integer i : integers){
+            System.out.println(i);
+        }
     }
 
     public List<Integer> bruteForce(int [] a){
+        int x = 0;
         List<Integer> lst = new ArrayList<>();
         for(int i = 0; i < a.length; i++){
             for(int k = i + 1; k < a.length; k++){
+                x++;
+                System.out.println("i = " + i + " k = " + k );
                 if(a[i] == a[k]){
                     lst.add(a[i]);
                 }
             }
         }
+        System.out.println("x -> " + x);
         return lst;
     }
 
@@ -64,6 +75,19 @@ public class FindAllDuplicates442 {
             }
         }
 
+        return lst;
+    }
+
+    public List<Integer> useHashSet(int [] a){
+        final List<Integer> lst = new ArrayList<>();
+        final Set<Integer> integerHashSet = new HashSet<>();
+        for(Integer i : a){
+            if(integerHashSet.contains(i)){
+                lst.add(i);
+            }else {
+                integerHashSet.add(i);
+            }
+        }
         return lst;
     }
 }

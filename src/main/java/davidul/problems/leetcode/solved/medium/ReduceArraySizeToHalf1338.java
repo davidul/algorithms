@@ -1,11 +1,9 @@
-package davidul.problems.leetcode.unsolved.medium;
+package davidul.problems.leetcode.solved.medium;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Given an array arr.  You can choose a set of integers and remove all the occurrences of these integers in the array.

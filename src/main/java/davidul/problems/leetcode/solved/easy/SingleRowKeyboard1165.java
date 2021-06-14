@@ -1,4 +1,4 @@
-package davidul.problems.leetcode.solved;
+package davidul.problems.leetcode.solved.easy;
 
 /*
 There is a special keyboard with all keys in a single row.
