@@ -1,4 +1,4 @@
-package davidul.problems.leetcode.unsolved.stack.easy;
+package davidul.problems.leetcode.solved.stack.easy;
 
 import java.util.Stack;
 

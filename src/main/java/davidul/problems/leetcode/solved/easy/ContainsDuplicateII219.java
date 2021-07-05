@@ -1,4 +1,4 @@
-package davidul.problems.leetcode.unsolved.easy;
+package davidul.problems.leetcode.solved.easy;
 
 /**
  * Given an integer array nums and an integer k, return true

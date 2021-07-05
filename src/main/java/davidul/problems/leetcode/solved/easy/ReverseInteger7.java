@@ -1,4 +1,4 @@
-package davidul.problems.leetcode.unsolved.easy;
+package davidul.problems.leetcode.solved.easy;
 
 /**
  * Given a signed 32-bit integer x, return x with its digits reversed.
