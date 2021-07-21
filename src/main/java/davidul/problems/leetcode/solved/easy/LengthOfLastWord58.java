@@ -1,4 +1,4 @@
-package davidul.problems.leetcode.unsolved.easy;
+package davidul.problems.leetcode.solved.easy;
 
 /**
  * Given a string s consists of some words separated by spaces, return the length of the last word in the string. If the last word does not exist, return 0.
